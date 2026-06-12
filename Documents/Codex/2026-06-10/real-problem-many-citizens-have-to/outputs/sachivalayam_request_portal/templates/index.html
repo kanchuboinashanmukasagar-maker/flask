@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Sachivalayam Service & Complaint Portal{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <h1>Welcome to<br>Sachivalayam</h1>
+    <h2>Service & Complaint Portal</h2>
+    <p>A single platform to register your applications and complaints, track status and get updates.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="{{ url_for('register') }}">Register Now</a>
+      <a class="btn secondary" href="{{ url_for('track') }}">Track Your Application</a>
+    </div>
+  </div>
+  <div class="hero-building" aria-hidden="true"></div>
+</section>
+
+<section class="feature-band">
+  <header class="section-title">
+    <h2>Our Services</h2>
+    <span></span>
+  </header>
+  <article>
+    <span class="icon blue">DOC</span>
+    <h2>General Complaints</h2>
+    <p>Register general public complaints.</p>
+  </article>
+  <article>
+    <span class="icon green">DR</span>
+    <h2>Drainage Issues</h2>
+    <p>Report drainage and sewage problems.</p>
+  </article>
+  <article>
+    <span class="icon orange">LT</span>
+    <h2>Street Light Issues</h2>
+    <p>Report street light related problems.</p>
+  </article>
+  <article>
+    <span class="icon blue">WT</span>
+    <h2>Water Supply</h2>
+    <p>Report water supply related issues.</p>
+  </article>
+  <article>
+    <span class="icon purple">OT</span>
+    <h2>Other Services</h2>
+    <p>Other miscellaneous services.</p>
+  </article>
+</section>
+
+<section class="home-stats">
+  <div><strong>10,000+</strong><span>Applications</span></div>
+  <div><strong>5,000+</strong><span>Complaints</span></div>
+  <div><strong>50+</strong><span>Officers</span></div>
+  <div><strong>100%</strong><span>Transparency</span></div>
+</section>
+{% endblock %}

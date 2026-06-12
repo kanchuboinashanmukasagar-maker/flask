@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Update Status{% endblock %}
+
+{% block shell %}
+<div class="panel-layout officer">
+  <aside class="side-nav">
+    <div class="side-brand">
+      <span class="brand-mark">AP</span>
+      <span><strong>SACHIVALAYAM</strong><small>SERVICE & COMPLAINT PORTAL</small></span>
+    </div>
+    <p>OFFICER PANEL</p>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('dashboard', status='Pending') }}">Assigned Complaints</a>
+    <a href="{{ url_for('dashboard') }}">All Complaints</a>
+    <a class="active" href="{{ url_for('request_detail', tracking_id=record.tracking_id) }}">Add Remarks</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </aside>
+  <section class="panel-content">
+    <div class="panel-topbar"><span></span><strong>Officer: S. Rajesh</strong></div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-wrap panel-flash" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    <section class="form-shell update-page">
+      <h1>Update Status / Add Remarks</h1>
+      <form method="post" class="form-grid">
+        <label>
+          Complaint ID
+          <input value="{{ record.tracking_id }}" readonly>
+        </label>
+        <label>
+          Current Status
+          <input value="{{ record.status }}" readonly>
+        </label>
+        <label>
+          Update Status To <b>*</b>
+          <select name="status">
+            {% for item in statuses %}
+              <option value="{{ item }}" {% if record.status == item %}selected{% endif %}>{{ item }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>
+          Assigned officer
+          <input name="officer" value="{{ record.officer }}" list="officer-list">
+          <datalist id="officer-list">
+            {% for officer in officers %}
+              <option value="{{ officer }}"></option>
+            {% endfor %}
+          </datalist>
+        </label>
+        <label class="wide">
+          Remarks <b>*</b>
+          <textarea name="documents" rows="5" placeholder="Enter remarks or comments">{{ record.documents }}</textarea>
+        </label>
+        <button class="btn success wide" type="submit">Update Status</button>
+      </form>
+    </section>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}New Complaint / Application{% endblock %}
+
+{% block shell %}
+<div class="panel-layout citizen">
+  <aside class="side-nav">
+    <div class="side-brand">
+      <span class="brand-mark">AP</span>
+      <span><strong>SACHIVALAYAM</strong><small>SERVICE & COMPLAINT PORTAL</small></span>
+    </div>
+    <p>CITIZEN PANEL</p>
+    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a class="active" href="{{ url_for('register') }}">New Complaint</a>
+    <a href="{{ url_for('track') }}">Track Status</a>
+    <a href="{{ url_for('officer_login') }}">Officer Login</a>
+  </aside>
+  <section class="panel-content">
+    <div class="panel-topbar"><span></span><strong>Citizen Portal</strong></div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-wrap panel-flash" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    <section class="form-shell">
+      <h1>New Complaint / Application</h1>
+      <form method="post" class="form-grid">
+        <label>
+          Category <b>*</b>
+          <select name="category" required>
+            <option value="">-- Select Category --</option>
+            <option value="drainage">Drainage complaint</option>
+            <option value="street_lights">Street light complaint</option>
+            <option value="water_supply">Water supply complaint</option>
+            <option value="certificate">Certificate application</option>
+            <option value="pension">Pension or welfare application</option>
+            <option value="other">Other request</option>
+          </select>
+        </label>
+        <label>
+          Complaint Title <b>*</b>
+          <input name="title" required placeholder="Enter complaint title">
+        </label>
+        <label>
+          Citizen Name <b>*</b>
+          <input name="citizen_name" required placeholder="Enter full name">
+        </label>
+        <label>
+          Mobile Number <b>*</b>
+          <input name="phone" required placeholder="10-digit number">
+        </label>
+        <label class="wide">
+          Description <b>*</b>
+          <textarea name="description" rows="5" required placeholder="Enter detailed description of your complaint"></textarea>
+        </label>
+        <label>
+          Location
+          <input name="ward" required placeholder="Enter location">
+        </label>
+        <label>
+          Upload Documents
+          <input name="documents" placeholder="PDF, JPG, PNG - Max 5MB">
+        </label>
+        <div class="form-actions wide">
+          <button class="btn primary" type="submit">Submit Complaint</button>
+          <button class="btn ghost" type="reset">Reset</button>
+        </div>
+      </form>
+    </section>
+  </section>
+</div>
+{% endblock %}

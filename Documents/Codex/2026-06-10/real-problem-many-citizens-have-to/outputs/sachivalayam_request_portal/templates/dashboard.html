@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Officer Dashboard{% endblock %}
+
+{% block shell %}
+<div class="panel-layout officer">
+  <aside class="side-nav">
+    <div class="side-brand">
+      <span class="brand-mark">AP</span>
+      <span><strong>SACHIVALAYAM</strong><small>SERVICE & COMPLAINT PORTAL</small></span>
+    </div>
+    <p>OFFICER PANEL</p>
+    <a class="active" href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('dashboard', status='Pending') }}">Assigned Complaints</a>
+    <a href="{{ url_for('dashboard') }}">All Complaints</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </aside>
+  <section class="panel-content">
+    <div class="panel-topbar"><span></span><strong>Officer: S. Rajesh</strong></div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-wrap panel-flash" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    <section class="dashboard-content">
+      <h1>Dashboard</h1>
+      <section class="metrics">
+        <div><span>Total Assigned</span><strong>{{ counts.total or 0 }}</strong></div>
+        <div><span>Pending</span><strong>{{ counts.pending or 0 }}</strong></div>
+        <div><span>In Progress</span><strong>{{ counts.in_progress or 0 }}</strong></div>
+        <div><span>Completed</span><strong>{{ counts.completed or 0 }}</strong></div>
+      </section>
+
+      <section class="table-tools">
+        <form method="get" class="search-row">
+          <input name="q" value="{{ query }}" placeholder="Search ID, citizen, ward, officer, phone">
+          <select name="status">
+            <option value="">All statuses</option>
+            {% for item in statuses %}
+              <option value="{{ item }}" {% if status == item %}selected{% endif %}>{{ item }}</option>
+            {% endfor %}
+          </select>
+          <button class="btn primary" type="submit">Search</button>
+        </form>
+      </section>
+
+      <section class="data-table" aria-label="Requests table">
+        <h2>Recent Assigned Complaints</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Category</th>
+              <th>Complaint Title</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+            <tr>
+              <td>{{ record.tracking_id }}</td>
+              <td>{{ record.category|replace('_', ' ')|title }}</td>
+              <td>{{ record.title }}</td>
+              <td>{{ record.created_at }}</td>
+              <td><span class="status-pill {{ record.status|lower|replace(' ', '-') }}">{{ record.status }}</span></td>
+              <td><a class="table-link" href="{{ url_for('request_detail', tracking_id=record.tracking_id) }}">View</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="empty">No requests found.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </section>
+  </section>
+</div>
+{% endblock %}

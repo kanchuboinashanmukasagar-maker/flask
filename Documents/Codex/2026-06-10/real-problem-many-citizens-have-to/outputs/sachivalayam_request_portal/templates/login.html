@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Officer Login{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+  <div class="auth-brand">
+    <span class="brand-mark">AP</span>
+    <span>
+      <strong>SACHIVALAYAM</strong>
+      <small>SERVICE & COMPLAINT PORTAL</small>
+    </span>
+  </div>
+  <form method="post" class="login-card">
+    <h1>Login</h1>
+    <p>Login to your officer account</p>
+    <input type="hidden" name="next" value="{{ next }}">
+    <label>
+      <input name="username" required autocomplete="username" placeholder="Mobile Number / Email">
+    </label>
+    <label>
+      <input name="password" type="password" required autocomplete="current-password" placeholder="Password">
+    </label>
+    <div class="auth-row">
+      <label class="check-label"><input type="checkbox"> Remember me</label>
+      <a href="#">Forgot Password?</a>
+    </div>
+    <button class="btn primary" type="submit">Login</button>
+    <p class="login-help">Demo officer credentials: officer / sachivalayam123</p>
+  </form>
+</section>
+{% endblock %}

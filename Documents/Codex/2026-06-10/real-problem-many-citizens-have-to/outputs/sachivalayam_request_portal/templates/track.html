@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Track Status{% endblock %}
+
+{% block content %}
+<section class="track-page">
+  <div class="track-box">
+    <h1>Track Application / Complaint Status</h1>
+    <p>Enter your Application / Complaint ID to track status</p>
+    <form method="post" class="search-row">
+      <input name="tracking_id" value="{{ tracking_id or '' }}" placeholder="Enter Application / Complaint ID" required>
+      <button class="btn primary" type="submit">Track Status</button>
+    </form>
+    <div class="or-line"><span>OR</span></div>
+    <form method="post" class="search-row">
+      <input name="tracking_id" placeholder="Enter Mobile Number">
+      <button class="btn primary" type="submit">Track Status</button>
+    </form>
+  </div>
+
+  <div class="steps">
+    <article><b>1</b><strong>Register</strong><span>Register your complaint or application.</span></article>
+    <article><b>2</b><strong>Get ID</strong><span>You will receive a unique ID for tracking.</span></article>
+    <article><b>3</b><strong>Track Status</strong><span>Track status using ID or mobile number.</span></article>
+  </div>
+</section>
+
+{% if record %}
+<section class="record-view">
+  <div class="record-main">
+    <p class="eyebrow">{{ record.tracking_id }}</p>
+    <h2>{{ record.title }}</h2>
+    <p>{{ record.description }}</p>
+    <div class="timeline">
+      <span class="status-pill {{ record.status|lower|replace(' ', '-') }}">{{ record.status }}</span>
+      <span>Created: {{ record.created_at }}</span>
+      <span>Updated: {{ record.updated_at }}</span>
+    </div>
+  </div>
+  <aside>
+    <h3>Request Details</h3>
+    <dl>
+      <dt>Citizen</dt><dd>{{ record.citizen_name }}</dd>
+      <dt>Ward</dt><dd>{{ record.ward }}</dd>
+      <dt>Assigned officer</dt><dd>{{ record.officer }}</dd>
+      <dt>Documents</dt><dd>{{ record.documents }}</dd>
+    </dl>
+  </aside>
+</section>
+{% endif %}
+{% endblock %}

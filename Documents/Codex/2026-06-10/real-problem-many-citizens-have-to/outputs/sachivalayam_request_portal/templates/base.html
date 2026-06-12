@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Sachivalayam Request Portal{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  {% block shell %}
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="brand-mark">AP</span>
+      <span>
+        <strong>SACHIVALAYAM</strong>
+        <small>SERVICE & COMPLAINT PORTAL</small>
+      </span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('track') }}">Track Status</a>
+      <a href="{{ url_for('about') }}">About Us</a>
+      <a href="{{ url_for('contact') }}">Contact Us</a>
+      {% if session.get("officer_logged_in") %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a class="nav-btn login" href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a class="nav-btn login" href="{{ url_for('officer_login') }}">Login</a>
+        <a class="nav-btn register" href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <section class="flash-wrap" aria-live="polite">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </section>
+    {% endif %}
+  {% endwith %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  {% endblock %}
+</body>
+</html>
